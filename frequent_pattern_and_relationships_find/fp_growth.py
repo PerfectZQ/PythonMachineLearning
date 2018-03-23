@@ -17,7 +17,8 @@ class TreeNode:
         self.count += num_occur
 
     def display(self, index=1):
-        print '---' * index, '|', self.name, ':', self.count
+        print
+        '---' * index, '|', self.name, ':', self.count
         for child in self.children.values():
             child.display(index + 1)
 
@@ -189,4 +190,4 @@ def load_data():
 
 if __name__ == '__main__':
     data = load_data()
-    print FPGrowth(data, 2).get_freq_items()
+    print(FPGrowth(data, 2).get_freq_items())
