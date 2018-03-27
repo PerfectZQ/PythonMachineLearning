@@ -1,2 +1,3 @@
 # -*- coding: utf-8 -*-
-from numpy import *
+
+print '今天早上有雾'.encode('utf-16')
