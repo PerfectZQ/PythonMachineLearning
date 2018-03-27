@@ -13,6 +13,9 @@ class TreeNode:
         # 用于指向相同元素项所在的树节点
         self.node_link = None
 
+    def __cmp__(self, other):
+        pass
+
     def inc(self, num_occur):
         self.count += num_occur
 
@@ -76,8 +79,10 @@ class FPGrowth:
         for trans in data_set:
             for item in trans:
                 header_table[item] = header_table.get(item, 0) + data_set[trans]
-        # 删除不满足最小支持度阈值的项
-        for item in header_table.keys():
+        # 删除不满足最小支持度阈值的项，遍历keys的时候，python3会出现错误：
+        # dictionary changed size during iteration
+        # 转换成 list 就可以了
+        for item in list(header_table.keys()):
             if header_table[item] < min_sup:
                 del header_table[item]
         # 频繁一项集
@@ -141,7 +146,7 @@ class FPGrowth:
         :return: 
         """
         # 按各项支持度计数从小到大的顺序开始分别挖掘的条件FP树
-        find_freq_list = [v[0] for v in sorted(header_table.items(), key=lambda p: p[1])]
+        find_freq_list = [v[0] for v in sorted(header_table.items(), key=lambda p: p[1][0])]
         for item in find_freq_list:
             new_freq_set = prefix_path.copy()
             new_freq_set.add(item)
